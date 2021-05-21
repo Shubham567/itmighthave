@@ -2,7 +2,8 @@
 // import './App.css';
 
 // import {loader} from "@monaco-editor/react";
-import * as monaco from "monaco-editor-core";
+import * as monaco from "monaco-editor";
+// import * as monaco from "monaco-editor-core";
 import {useEffect, useRef} from "react";
 import {
   MonacoLanguageClient, MessageConnection, CloseAction, ErrorAction,
@@ -70,20 +71,20 @@ function App() {
         }
       })
 
-      MonacoServices.install(editor);
-
-      const url = createUrl('/py');
-      const webSocket = createWebSocket(url);
-// listen when the web socket is opened
-      listen({
-        webSocket,
-        onConnection: connection => {
-          // create and start the language client
-          const languageClient = createLanguageClient(connection);
-          const disposable = languageClient.start();
-          connection.onClose(() => disposable.dispose());
-        }
-      });
+//       MonacoServices.install(monaco);
+//
+//       const url = createUrl('/py');
+//       const webSocket = createWebSocket(url);
+// // listen when the web socket is opened
+//       listen({
+//         webSocket,
+//         onConnection: connection => {
+//           // create and start the language client
+//           const languageClient = createLanguageClient(connection);
+//           const disposable = languageClient.start();
+//           connection.onClose(() => disposable.dispose());
+//         }
+//       });
 
 
     // })
