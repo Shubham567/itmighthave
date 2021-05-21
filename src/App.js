@@ -1,7 +1,8 @@
 // import logo from './logo.svg';
 // import './App.css';
 
-import {loader} from "@monaco-editor/react";
+// import {loader} from "@monaco-editor/react";
+import * as monaco from "monaco-editor-core";
 import {useEffect, useRef} from "react";
 import {
   MonacoLanguageClient, MessageConnection, CloseAction, ErrorAction,
@@ -53,7 +54,7 @@ function createWebSocket(url){
 function App() {
   const mountPoint = useRef(null);
   useEffect(() => {
-    loader.init().then(monaco => {
+    // loader.init().then(monaco => {
       monaco.languages.register({
         id: 'python',
         extensions: ['.py'],
@@ -61,7 +62,7 @@ function App() {
         mimetypes: ['application/text'],
       })
 
-      monaco.editor.create(mountPoint.current,{
+      const editor = monaco.editor.create(mountPoint.current,{
         model: monaco.editor.createModel("", 'python', monaco.Uri.parse('inmemory://model.py')),
         glyphMargin: true,
         lightbulb: {
@@ -69,7 +70,7 @@ function App() {
         }
       })
 
-      MonacoServices.install(monaco);
+      MonacoServices.install(editor);
 
       const url = createUrl('/py');
       const webSocket = createWebSocket(url);
@@ -85,7 +86,7 @@ function App() {
       });
 
 
-    })
+    // })
   },[mountPoint]);
   return (
     <div className="App" ref={mountPoint} style={{width: "100vw",height: "100vh"}}>
