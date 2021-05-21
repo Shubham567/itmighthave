@@ -61,7 +61,7 @@ function App() {
         mimetypes: ['application/text'],
       })
 
-      monaco.editor.create(mountPoint.current,{
+      const editor = monaco.editor.create(mountPoint.current,{
         model: monaco.editor.createModel("", 'python', monaco.Uri.parse('inmemory://model.py')),
         glyphMargin: true,
         lightbulb: {
@@ -69,7 +69,7 @@ function App() {
         }
       })
 
-      MonacoServices.install(monaco);
+      MonacoServices.install(editor);
 
       const url = createUrl('/py');
       const webSocket = createWebSocket(url);
