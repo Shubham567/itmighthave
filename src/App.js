@@ -4,6 +4,7 @@
 // import {loader} from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 // import * as monaco from "monaco-editor-core";
+// import * as mecev from 'monaco-editor-core/esm/vs/platform/commands/common/commands';
 import {useEffect, useRef} from "react";
 import {
   MonacoLanguageClient, MessageConnection, CloseAction, ErrorAction,
@@ -19,7 +20,7 @@ function createLanguageClient(connection) {
     name: "Sample Language Client",
     clientOptions: {
       // use a language id as a document selector
-      documentSelector: ['json'],
+      documentSelector: ['python'],
       // disable the default error handler
       errorHandler: {
         error: () => ErrorAction.Continue,
@@ -59,11 +60,11 @@ function App() {
       monaco.languages.register({
         id: 'python',
         extensions: ['.py'],
-        aliases: ['Python'],
+        aliases: ['python'],
         mimetypes: ['application/text'],
       })
 
-      const editor = monaco.editor.create(mountPoint.current,{
+    monaco.editor.create(mountPoint.current,{
         model: monaco.editor.createModel("", 'python', monaco.Uri.parse('inmemory://model.py')),
         glyphMargin: true,
         lightbulb: {
@@ -71,20 +72,20 @@ function App() {
         }
       })
 
-//       MonacoServices.install(monaco);
-//
-//       const url = createUrl('/py');
-//       const webSocket = createWebSocket(url);
-// // listen when the web socket is opened
-//       listen({
-//         webSocket,
-//         onConnection: connection => {
-//           // create and start the language client
-//           const languageClient = createLanguageClient(connection);
-//           const disposable = languageClient.start();
-//           connection.onClose(() => disposable.dispose());
-//         }
-//       });
+      MonacoServices.install(monaco);
+
+      const url = createUrl('/py');
+      const webSocket = createWebSocket(url);
+// listen when the web socket is opened
+      listen({
+        webSocket,
+        onConnection: connection => {
+          // create and start the language client
+          const languageClient = createLanguageClient(connection);
+          const disposable = languageClient.start();
+          connection.onClose(() => disposable.dispose());
+        }
+      });
 
 
     // })
